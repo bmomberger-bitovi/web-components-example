@@ -6,24 +6,16 @@
   },
   "exports": {
     "./components/Breadcrumbs": {
-      "import": {
-        "development": "./components/Breadcrumbs.tsx",
-        "default": "./public/Breadcrumbs.js"
-      },
+      "import": "./public/Breadcrumbs.js",
       "types": "./public/Breadcrumbs.d.ts"
     },
     "./components/NavLinks": {
-      "import": {
-        "development": "./components/NavLinks.tsx",
-        "default": "./public/NavLinks.js"
-      },
+      "import": "./public/NavLinks.js",
       "types": "./public/NavLinks.d.ts"
     },
     "./components/PageContent": {
-      "import": {
-        "development": "./components/PageContent.jsx",
-        "default": "./public/PageContent.js"
-      },
+      "import": "./public/PageContent.js",
+      "require": "./public/PageContent.js",
       "types": "./public/PageContent.d.ts"
     },
     "./webcomponents/bread-crumbs": {
