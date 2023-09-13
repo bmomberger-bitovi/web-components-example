@@ -5,6 +5,24 @@
     "node": ">=18"
   },
   "exports": {
+    "./components/Breadcrumbs": {
+      "require": {
+          "development": "./components/Breadcrumbs.tsx",
+          "default": "./public/Breadcrumbs.jsx"
+      },
+      "types": "./public/Breadcrumbs.d.ts"
+    },
+    "./components/NavLinks": {
+      "require": {
+          "development": "./components/NavLinks.tsx",
+          "default": "./public/NavLinks.jsx"
+      },
+      "types": "./public/NavLinks.d.ts"
+    },
+    "./components/PageContent": {
+      "require": "./components/PageContent.jsx",
+      "types": "./public/PageContent.d.ts"
+    },
     "./webcomponents/bread-crumbs": {
       "import": "./public/bread-crumbs.es.js",
       "require": "./public/bread-crumbs.umd.js",
