@@ -1,21 +1,21 @@
 {
   "name": "web-components-example",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "engines": {
     "node": ">=18"
   },
   "exports": {
     "./components/Breadcrumbs": {
       "require": {
-          "development": "./components/Breadcrumbs.tsx",
-          "default": "./public/Breadcrumbs.jsx"
+        "development": "./components/Breadcrumbs.tsx",
+        "default": "./public/Breadcrumbs.jsx"
       },
       "types": "./public/Breadcrumbs.d.ts"
     },
     "./components/NavLinks": {
       "require": {
-          "development": "./components/NavLinks.tsx",
-          "default": "./public/NavLinks.jsx"
+        "development": "./components/NavLinks.tsx",
+        "default": "./public/NavLinks.jsx"
       },
       "types": "./public/NavLinks.d.ts"
     },
