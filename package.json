@@ -1,6 +1,6 @@
 {
   "name": "web-components-example",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "engines": {
     "node": ">=18"
   },
