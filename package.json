@@ -6,21 +6,21 @@
   },
   "exports": {
     "./components/Breadcrumbs": {
-      "require": {
+      "import": {
         "development": "./components/Breadcrumbs.tsx",
         "default": "./public/Breadcrumbs.jsx"
       },
       "types": "./public/Breadcrumbs.d.ts"
     },
     "./components/NavLinks": {
-      "require": {
+      "import": {
         "development": "./components/NavLinks.tsx",
         "default": "./public/NavLinks.jsx"
       },
       "types": "./public/NavLinks.d.ts"
     },
     "./components/PageContent": {
-      "require": "./components/PageContent.jsx",
+      "import": "./components/PageContent.jsx",
       "types": "./public/PageContent.d.ts"
     },
     "./webcomponents/bread-crumbs": {
