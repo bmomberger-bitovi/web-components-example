@@ -3,6 +3,7 @@ import path from "path";
 import url from "url";
 import { build, defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import typescript from '@rollup/plugin-typescript';
 // import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
@@ -30,6 +31,7 @@ const getConfiguration = ({ plugins, ...library }) => {
           ],
         }
       }),
+      typescript(),
       ...plugins
     ],
     build: {
