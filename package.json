@@ -8,14 +8,14 @@
     "./components/Breadcrumbs": {
       "import": {
         "development": "./components/Breadcrumbs.tsx",
-        "default": "./public/Breadcrumbs.jsx"
+        "default": "./public/Breadcrumbs.js"
       },
       "types": "./public/Breadcrumbs.d.ts"
     },
     "./components/NavLinks": {
       "import": {
         "development": "./components/NavLinks.tsx",
-        "default": "./public/NavLinks.jsx"
+        "default": "./public/NavLinks.js"
       },
       "types": "./public/NavLinks.d.ts"
     },

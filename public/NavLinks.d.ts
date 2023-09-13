@@ -14,4 +14,4 @@ export interface RouteRequestEvent extends CustomEvent {
 export default function NavLinks({ routeRoot, initialRoute }: {
     routeRoot: string;
     initialRoute: string;
-}): import("react").JSX.Element;
+}): import("react/jsx-runtime").JSX.Element;
