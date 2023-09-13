@@ -22,6 +22,7 @@
   },
   "include": [
     "components/**/*.ts",
+    "components/**/*.jsx",
     "components/**/*.tsx"
   ],
   "exclude": [

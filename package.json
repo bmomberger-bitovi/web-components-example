@@ -20,7 +20,10 @@
       "types": "./public/NavLinks.d.ts"
     },
     "./components/PageContent": {
-      "import": "./components/PageContent.jsx",
+      "import": {
+        "development": "./components/PageContent.jsx",
+        "default": "./public/PageContent.js"
+      },
       "types": "./public/PageContent.d.ts"
     },
     "./webcomponents/bread-crumbs": {
