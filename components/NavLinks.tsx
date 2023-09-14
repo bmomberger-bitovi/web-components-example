@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import type { MouseEvent as ReactMouseEvent } from "react";
+import type { RouteChangeEvent } from "./Breadcrumbs";
 
 declare module 'react' {
   interface StyleHTMLAttributes<T> extends React.HTMLAttributes<T> {
@@ -7,11 +9,23 @@ declare module 'react' {
   }
 }
 
-export interface RouteRequestEvent extends CustomEvent {
-  data?: {
-    href: string;
-  };
-  originalEvent?: MouseEvent;
+export interface PrefetchRequestEvent extends CustomEvent<{
+  href: string;
+}> {
+  originalEvent: ReactMouseEvent;
+}
+
+export interface RouteRequestEvent extends CustomEvent<{
+  href: string;
+}> {
+  originalEvent: ReactMouseEvent;
+}
+
+declare global {
+  interface HTMLElementEventMap {
+    "prefetchrequest": PrefetchRequestEvent;
+    "routerequest": RouteRequestEvent;
+  }
 }
 
 export default function NavLinks({
@@ -24,9 +38,9 @@ export default function NavLinks({
   const [currentRoute, setCurrentRoute] = useState(initialRoute);
 
   useEffect(() => {
-    const handler = (ev) => {
-      if (ev.data.url.startsWith(routeRoot)) {
-         setCurrentRoute(ev.data.url.replace(routeRoot, ""));
+    const handler = (ev: RouteChangeEvent) => {
+      if (ev.detail.url.startsWith(routeRoot)) {
+         setCurrentRoute(ev.detail.url.replace(routeRoot, ""));
       } else {
         setCurrentRoute("");
       }
@@ -39,32 +53,38 @@ export default function NavLinks({
 
   }, [])
 
-  const requestRouteChange = (ev) => {
-    const href = ev.target.getAttribute("href");
+  const requestRouteChange = (ev: ReactMouseEvent) => {
+    const href = (ev.target as HTMLElement).getAttribute("href") as string;
     ev.preventDefault();
 
-    const wrapped: RouteRequestEvent = new CustomEvent("routerequest", {
-      bubbles: true
-    });
-    wrapped.data = {
-      href
-    }
-    wrapped.originalEvent = ev;
+    const wrapped: RouteRequestEvent = Object.assign(
+      new CustomEvent("routerequest", {
+        bubbles: true,
+        detail: { href }
+      }),
+      {
+        originalEvent: ev
+      },
+    )
 
     ev.target.dispatchEvent(wrapped);
   }
 
-  const requestPrefetch = (ev) => {
-    const href = ev.target.getAttribute("href");
+  const requestPrefetch = (ev: ReactMouseEvent) => {
+    const href = (ev.target as HTMLElement).getAttribute("href") as string;
     // ev.preventDefault();
 
-    const wrapped: RouteRequestEvent = new CustomEvent("prefetchrequest", {
-      bubbles: true
-    });
-    wrapped.data = {
-      href
-    }
-    wrapped.originalEvent = ev;
+    const wrapped: PrefetchRequestEvent = Object.assign(
+      new CustomEvent("prefetchrequest", {
+        bubbles: true,
+        detail: {
+          href
+        }
+      }),
+      {
+        originalEvent: ev
+      }
+    );
 
     ev.target.dispatchEvent(wrapped);
   }

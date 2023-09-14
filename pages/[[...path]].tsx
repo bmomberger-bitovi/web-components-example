@@ -3,27 +3,29 @@ import Script from 'next/script';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from "react";
 import styles from '../styles/Home.module.css';
-import Breadcrumbs from '../wrappers/Breadcrumbs';
-import NavLinks from '../wrappers/NavLinks';
+import Breadcrumbs from '../components/Breadcrumbs';
+import NavLinks from '../components/NavLinks';
+import type { RouteRequestEvent, PrefetchRequestEvent } from '../components/NavLinks';
+import type { RouteChangeEvent } from '../components/Breadcrumbs';
 
 export default function Home() {
 
-  const [lastError, setLastError] = useState(null);
+  const [lastError, setLastError] = useState<string | null>(null);
   const router = useRouter();
-  const navLinksRef = useRef();
+  const navLinksRef = useRef<HTMLElement>();
 
   useEffect(() => {
-    const handler = (ev) => {
-      if (!ev.data.href.includes("invalid")) {
-         router.push(ev.data.href);
+    const handler = (ev: RouteRequestEvent) => {
+      if (!ev.detail.href.includes("invalid")) {
+         router.push(ev.detail.href);
          setLastError(null);
       } else {
-        setLastError(`Invalid route detected: ${ev.data.href}`);
+        setLastError(`Invalid route detected: ${ev.detail.href}`);
       }
     };
-    const pfHandler = (ev) => {
-      if (!ev.data.href.includes("invalid")) {
-         router.prefetch(ev.data.href);
+    const pfHandler = (ev: PrefetchRequestEvent) => {
+      if (!ev.detail.href.includes("invalid")) {
+         router.prefetch(ev.detail.href);
       }
     };
 
@@ -39,14 +41,14 @@ export default function Home() {
 
   }, [navLinksRef.current]);
 
-  const routeAsPath = router.query.path?.join("/");
+  const routeAsPath = (router.query.path as string[] | undefined)?.join("/");
 
   useEffect(() => {
-    const ev = new CustomEvent("routechange");
-
-    ev.data = {
-      url: "/" + (routeAsPath ?? "")
-    };
+    const ev: RouteChangeEvent = new CustomEvent("routechange", {
+      detail: {
+        url: "/" + (routeAsPath ?? "")
+      }
+    });
 
     document.dispatchEvent(ev);
   }, [routeAsPath ?? ""]);
@@ -60,12 +62,16 @@ export default function Home() {
       </Head>
 
       <main>
+        <h1>This is the internal app for developing the breadcrumb and nav-links components</h1>
+
         <p>Bread Crumbs</p>
-        <Breadcrumbs routeRoot="/" initialRoute={routeAsPath} />
+        <Breadcrumbs routeRoot="/" initialRoute={routeAsPath ?? ""} />
         <hr/>
 
+        <div ref={navLinksRef}>
         <p>Nav Links</p>
-        <NavLinks routeRoot="/" initialRoute={routeAsPath} navLinksRef={navLinksRef} />
+        <NavLinks routeRoot="/" initialRoute={routeAsPath || ""} />
+        </div>
       </main>
 
       <footer>

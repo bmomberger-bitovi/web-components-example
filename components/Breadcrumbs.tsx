@@ -1,5 +1,15 @@
 import { useEffect, useState } from "react";
 
+export interface RouteChangeEvent extends CustomEvent<{
+  url: string;
+}> {}
+
+declare global {
+  interface HTMLElementEventMap {
+    "routechange": RouteChangeEvent;
+  }
+}
+
 export default function Breadcrumbs({
   routeRoot = "/",
   initialRoute
@@ -7,12 +17,12 @@ export default function Breadcrumbs({
   routeRoot: string;
   initialRoute: string;
 }) {
-  const [currentRoute, setCurrentRoute] = useState("/");
+  const [currentRoute, setCurrentRoute] = useState(initialRoute);
 
   useEffect(() => {
     const handler = (ev) => {
-      if (ev.data.url.startsWith(routeRoot)) {
-         setCurrentRoute(ev.data.url.replace(routeRoot, ""));
+      if (ev.detail.url.startsWith(routeRoot)) {
+         setCurrentRoute(ev.detail.url.replace(routeRoot, ""));
       } else {
         setCurrentRoute("");
       }
@@ -28,7 +38,7 @@ export default function Breadcrumbs({
   return (
     <ul>
       {
-        ["Home", ...currentRoute.split("/")].map((el, idx) => (
+        ["Home", ...(currentRoute ?? "").split("/")].filter(route => route !== "").map((el, idx) => (
           <li key={`breadcrumb-${el}-${idx}`}>
             {idx !== 0 && <span> / </span>}
             {el}

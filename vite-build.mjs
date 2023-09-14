@@ -63,12 +63,13 @@ const getConfiguration = ({ plugins, ...library }) => {
         ...library,
       },
       "outDir": "./public",
-    },
-    rollupOptions: {
-      external: ["react"],
-      output: {
-        globals: {
-          react: "react",
+      rollupOptions: {
+        external: ["react", "react-dom"],
+        output: {
+          globals: {
+            react: "React",
+            "react-dom": "ReactDOM"
+          },
         },
       },
     },

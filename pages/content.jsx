@@ -4,8 +4,8 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from "react";
 import styles from '../styles/Home.module.css';
-import Breadcrumbs from '../wrappers/Breadcrumbs';
-import NavLinks from '../wrappers/NavLinks';
+import Breadcrumbs from '../components/Breadcrumbs';
+import NavLinks from '../components/NavLinks';
 
 
 const DynamicPageContent = dynamic(
@@ -20,11 +20,11 @@ export default function Content() {
 
   useEffect(() => {
     const handler = (ev) => {
-      if (!ev.data.href.includes("invalid")) {
-         router.push(ev.data.href);
+      if (!ev.detail.href.includes("invalid")) {
+         router.push(ev.detail.href);
          setLastError(null);
       } else {
-        setLastError(`Invalid route detected: ${ev.data.href}`);
+        setLastError(`Invalid route detected: ${ev.detail.href}`);
       }
     };
 
@@ -38,11 +38,11 @@ export default function Content() {
   }, [navLinksRef.current]);
 
   useEffect(() => {
-      const ev = new CustomEvent("routechange");
-
-      ev.data = {
-        url: "/content"
-      };
+      const ev = new CustomEvent("routechange", {
+        detail: {
+          url: "/content"
+        }
+      });;
 
       document.dispatchEvent(ev);
   }, []);
@@ -55,12 +55,16 @@ export default function Content() {
       </Head>
 
       <main>
+        <h1>This is the internal app for developing the breadcrumb and nav-links components</h1>
+
         <p>Bread Crumbs</p>
         <Breadcrumbs routeRoot="/" initialRoute="/content" />
         <hr/>
 
+        <div ref={navLinksRef}>
         <p>Nav Links</p>
-        <NavLinks routeRoot="/" initialRoute="/content" navLinksRef={navLinksRef} />
+        <NavLinks routeRoot="/" initialRoute="/content" />
+        </div>
 
         <p>Page Content</p>
         <DynamicPageContent />
