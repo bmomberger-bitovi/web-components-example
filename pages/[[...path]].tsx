@@ -41,7 +41,7 @@ export default function Home() {
 
   }, [navLinksRef.current]);
 
-  const routeAsPath = (router.query.path as string[] | undefined)?.join("/");
+  const routeAsPath = `/${(router.query.path as string[] | undefined)?.join("/") ?? ""}`;
 
   useEffect(() => {
     const ev: RouteChangeEvent = new CustomEvent("routechange", {
@@ -51,7 +51,7 @@ export default function Home() {
     });
 
     document.dispatchEvent(ev);
-  }, [routeAsPath ?? ""]);
+  }, [routeAsPath]);
 
   return (
     <div className={styles.container}>
@@ -65,12 +65,12 @@ export default function Home() {
         <h1>This is the internal app for developing the breadcrumb and nav-links components</h1>
 
         <p>Bread Crumbs</p>
-        <Breadcrumbs routeRoot="/" initialRoute={routeAsPath ?? ""} />
+        <Breadcrumbs routeRoot="/" initialRoute={routeAsPath} />
         <hr/>
 
         <div ref={navLinksRef}>
         <p>Nav Links</p>
-        <NavLinks routeRoot="/" initialRoute={routeAsPath || ""} />
+        <NavLinks routeRoot="/" initialRoute={routeAsPath} />
         </div>
       </main>
 

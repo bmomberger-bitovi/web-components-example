@@ -35,7 +35,11 @@ export default function NavLinks({
   routeRoot: string;
   initialRoute: string;
 }) {
-  const [currentRoute, setCurrentRoute] = useState(initialRoute);
+  const [currentRoute, setCurrentRoute] = useState(
+    initialRoute.startsWith(routeRoot)
+    ? initialRoute.replace(routeRoot, "")
+    : ""
+  );
 
   useEffect(() => {
     const handler = (ev: RouteChangeEvent) => {
@@ -113,6 +117,7 @@ export default function NavLinks({
           <a href="/invalid-route" onClick={requestRouteChange}>This nav is invalid</a>
         </li>
       </ul>
+      <div>(current route: {currentRoute})</div>
     </>
   );
 }

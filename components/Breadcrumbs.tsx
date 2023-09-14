@@ -17,10 +17,17 @@ export default function Breadcrumbs({
   routeRoot: string;
   initialRoute: string;
 }) {
-  const [currentRoute, setCurrentRoute] = useState(initialRoute);
+  console.log("Updating breadcrumbs:", initialRoute, "-- routeRoot is: ", routeRoot)
+  const [currentRoute, setCurrentRoute] = useState(
+    initialRoute.startsWith(routeRoot)
+    ? initialRoute.replace(routeRoot, "")
+    : ""
+  );
 
   useEffect(() => {
     const handler = (ev) => {
+      console.log("Received routechange:", ev.detail.url, "-- routeRoot is: ", routeRoot)
+
       if (ev.detail.url.startsWith(routeRoot)) {
          setCurrentRoute(ev.detail.url.replace(routeRoot, ""));
       } else {

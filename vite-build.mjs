@@ -43,6 +43,13 @@ const navLinksWCConfig = {
   name: "nav-links",
   formats: ["umd"],
 };
+const pageContentWCConfig = {
+  plugins: [],
+  entry: path.resolve(__dirname, "./webcomponents/page-content.js"),
+  fileName: (format) => `page-content.${format}.js`,
+  name: "page-content",
+  formats: ["umd"],
+};
 
 
 const getConfiguration = ({ plugins, ...library }) => {
@@ -89,6 +96,7 @@ const buildLibraries = async () => {
     viteBuild(getConfiguration(pageContentConfig)),
     viteBuild(getConfiguration(breadCrumbsWCConfig)),
     viteBuild(getConfiguration(navLinksWCConfig)),
+    viteBuild(getConfiguration(pageContentWCConfig)),
   ]);
 };
 
