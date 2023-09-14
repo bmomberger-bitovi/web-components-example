@@ -9,15 +9,39 @@ import typescript from '@rollup/plugin-typescript';
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const breadCrumbsConfig = {
   plugins: [],
+  entry: path.resolve(__dirname, "./components/Breadcrumbs.tsx"),
+  fileName: (format) => `Breadcrumbs.${format}.js`,
+  name: "Breadcrumbs",
+  formats: ["es", "cjs"],
+};
+const navLinksConfig = {
+  plugins: [],
+  entry: path.resolve(__dirname, "./components/NavLinks.tsx"),
+  fileName: (format) => `NavLinks.${format}.js`,
+  name: "NavLinks",
+  formats: ["es", "cjs"],
+};
+const pageContentConfig = {
+  plugins: [],
+  entry: path.resolve(__dirname, "./components/PageContent.jsx"),
+  fileName: (format) => `PageContent.${format}.js`,
+  name: "PageContent",
+  formats: ["es", "cjs"],
+};
+
+const breadCrumbsWCConfig = {
+  plugins: [],
   entry: path.resolve(__dirname, "./webcomponents/bread-crumbs.js"),
   fileName: (format) => `bread-crumbs.${format}.js`,
   name: "bread-crumbs",
+  formats: ["umd"],
 };
-const navLinksConfig = {
+const navLinksWCConfig = {
   plugins: [],
   entry: path.resolve(__dirname, "./webcomponents/nav-links.js"),
   fileName: (format) => `nav-links.${format}.js`,
   name: "nav-links",
+  formats: ["umd"],
 };
 
 
@@ -36,7 +60,6 @@ const getConfiguration = ({ plugins, ...library }) => {
     ],
     build: {
       lib: {
-        formats: ["es", "umd"],
         ...library,
       },
       "outDir": "./public",
@@ -62,6 +85,9 @@ const buildLibraries = async () => {
   await Promise.all([
     viteBuild(getConfiguration(breadCrumbsConfig)),
     viteBuild(getConfiguration(navLinksConfig)),
+    viteBuild(getConfiguration(pageContentConfig)),
+    viteBuild(getConfiguration(breadCrumbsWCConfig)),
+    viteBuild(getConfiguration(navLinksWCConfig)),
   ]);
 };
 

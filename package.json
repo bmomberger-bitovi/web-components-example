@@ -6,16 +6,16 @@
   },
   "exports": {
     "./components/Breadcrumbs": {
-      "import": "./public/Breadcrumbs.js",
+      "import": "./public/Breadcrumbs.es.js",
       "types": "./public/Breadcrumbs.d.ts"
     },
     "./components/NavLinks": {
-      "import": "./public/NavLinks.js",
+      "import": "./public/NavLinks.es.js",
       "types": "./public/NavLinks.d.ts"
     },
     "./components/PageContent": {
-      "import": "./public/PageContent.js",
-      "require": "./public/PageContent.js",
+      "import": "./public/PageContent.es.js",
+      "require": "./public/PageContent.cjs.js",
       "types": "./public/PageContent.d.ts"
     },
     "./webcomponents/bread-crumbs": {
@@ -48,5 +48,8 @@
     "@vitejs/plugin-react": "^4.0.4",
     "typescript": "^5.2.2",
     "vite": "^4.4.9"
+  },
+  "publishConfig": {
+    "registry": "http://localhost:4873"
   }
 }
