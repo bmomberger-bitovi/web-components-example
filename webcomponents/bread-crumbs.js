@@ -4,7 +4,8 @@ import Breadcrumbs from "../components/Breadcrumbs";
 const WebBreadcrumbs = r2wc(Breadcrumbs, {
   props: {
     routeRoot: "string",
-    initialRoute: "string"
+    initialRoute: "string",
+    tokens: "json"
   },
 });
 

@@ -7,6 +7,7 @@ import styles from '../styles/Home.module.css';
 import Breadcrumbs from '../components/Breadcrumbs';
 import NavLinks from '../components/NavLinks';
 
+const tokens = { $title: "Content" }
 
 const DynamicPageContent = dynamic(
   () => import("../components/PageContent")
@@ -58,12 +59,12 @@ export default function Content() {
         <h1>This is the internal app for developing the breadcrumb and nav-links components</h1>
 
         <p>Bread Crumbs</p>
-        <Breadcrumbs routeRoot="/" initialRoute="/content" />
+        <Breadcrumbs routeRoot="/content" initialRoute="/content" tokens={tokens} />
         <hr/>
 
         <div ref={navLinksRef}>
         <p>Nav Links</p>
-        <NavLinks routeRoot="/" initialRoute="/content" />
+        <NavLinks routeRoot="/content" initialRoute="/content" />
         </div>
 
         <p>Page Content</p>

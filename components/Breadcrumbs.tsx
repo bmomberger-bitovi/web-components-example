@@ -10,14 +10,23 @@ declare global {
   }
 }
 
+type letter = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z"
+type cash = `$${string}`;
+type nocash = `${letter}${string}`
+interface BreadcrumbNames {
+  $title: string;
+  [key: nocash]: BreadcrumbNames;
+}
+
 export default function Breadcrumbs({
   routeRoot = "/",
-  initialRoute
+  initialRoute,
+  tokens = { $title: "Home" }
 }: {
   routeRoot: string;
   initialRoute: string;
+  tokens: BreadcrumbNames;
 }) {
-  console.log("Updating breadcrumbs:", initialRoute, "-- routeRoot is: ", routeRoot)
   const [currentRoute, setCurrentRoute] = useState(
     initialRoute.startsWith(routeRoot)
     ? initialRoute.replace(routeRoot, "")
@@ -26,8 +35,6 @@ export default function Breadcrumbs({
 
   useEffect(() => {
     const handler = (ev) => {
-      console.log("Received routechange:", ev.detail.url, "-- routeRoot is: ", routeRoot)
-
       if (ev.detail.url.startsWith(routeRoot)) {
          setCurrentRoute(ev.detail.url.replace(routeRoot, ""));
       } else {
@@ -42,10 +49,19 @@ export default function Breadcrumbs({
 
   }, [])
 
+  const routeNames = [];
+  let currentLevel: BreadcrumbNames = { home: tokens, $title: "" };
+  ["home", ...(currentRoute ?? "").split("/")].forEach(pathEl => {
+    if(pathEl !== "") {
+      currentLevel = currentLevel?.[pathEl]
+      routeNames.push(currentLevel && currentLevel.$title ? currentLevel.$title : pathEl);
+    }
+  })
+
   return (
     <ul>
       {
-        ["Home", ...(currentRoute ?? "").split("/")].filter(route => route !== "").map((el, idx) => (
+        routeNames.map((el, idx) => (
           <li key={`breadcrumb-${el}-${idx}`}>
             {idx !== 0 && <span> / </span>}
             {el}

@@ -8,6 +8,19 @@ import NavLinks from '../components/NavLinks';
 import type { RouteRequestEvent, PrefetchRequestEvent } from '../components/NavLinks';
 import type { RouteChangeEvent } from '../components/Breadcrumbs';
 
+const tokens = {
+  $title: "Home",
+  "foo": {
+    $title: "Foo Breadcrumb",
+    bar: {
+      $title: "Bar Breadcrumb"
+    },
+  },
+  baz: {
+    $title: "Baz Breadcrumb"
+  }
+};
+
 export default function Home() {
 
   const [lastError, setLastError] = useState<string | null>(null);
@@ -65,7 +78,7 @@ export default function Home() {
         <h1>This is the internal app for developing the breadcrumb and nav-links components</h1>
 
         <p>Bread Crumbs</p>
-        <Breadcrumbs routeRoot="/" initialRoute={routeAsPath} />
+        <Breadcrumbs routeRoot="/" initialRoute={routeAsPath} tokens={tokens} />
         <hr/>
 
         <div ref={navLinksRef}>
