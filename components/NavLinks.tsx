@@ -110,7 +110,7 @@ export default function NavLinks({
         <li className={currentRoute === "baz" ? "selected" : ""}>
           <a href="/baz" onClick={requestRouteChange}>Nav to /baz</a>
         </li>
-        <li className={currentRoute === "content" ? "selected" : ""}>
+        <li className={routeRoot === "/content" ? "selected" : ""}>
           <a href="/content" onMouseOver={requestPrefetch} onClick={requestRouteChange}>Nav to /content with dynamic content</a>
         </li>
         <li className={currentRoute === "invalid-route" ? "selected" : ""}>

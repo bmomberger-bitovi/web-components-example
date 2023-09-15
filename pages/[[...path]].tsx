@@ -59,7 +59,7 @@ export default function Home() {
   useEffect(() => {
     const ev: RouteChangeEvent = new CustomEvent("routechange", {
       detail: {
-        url: "/" + (routeAsPath ?? "")
+        url: routeAsPath
       }
     });
 

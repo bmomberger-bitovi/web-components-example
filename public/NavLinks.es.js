@@ -967,7 +967,7 @@ function Yt({
     /* @__PURE__ */ w.jsxs("ul", { className: "jsx-1370157471", children: [
       /* @__PURE__ */ w.jsx("li", { className: "jsx-1370157471 " + ((u === "foo/bar" ? "selected" : "") || ""), children: /* @__PURE__ */ w.jsx("a", { href: "/foo/bar", onClick: n, className: "jsx-1370157471", children: "Nav to /foo/bar" }) }),
       /* @__PURE__ */ w.jsx("li", { className: "jsx-1370157471 " + ((u === "baz" ? "selected" : "") || ""), children: /* @__PURE__ */ w.jsx("a", { href: "/baz", onClick: n, className: "jsx-1370157471", children: "Nav to /baz" }) }),
-      /* @__PURE__ */ w.jsx("li", { className: "jsx-1370157471 " + ((u === "content" ? "selected" : "") || ""), children: /* @__PURE__ */ w.jsx("a", { href: "/content", onMouseOver: l, onClick: n, className: "jsx-1370157471", children: "Nav to /content with dynamic content" }) }),
+      /* @__PURE__ */ w.jsx("li", { className: "jsx-1370157471 " + ((s === "/content" ? "selected" : "") || ""), children: /* @__PURE__ */ w.jsx("a", { href: "/content", onMouseOver: l, onClick: n, className: "jsx-1370157471", children: "Nav to /content with dynamic content" }) }),
       /* @__PURE__ */ w.jsx("li", { className: "jsx-1370157471 " + ((u === "invalid-route" ? "selected" : "") || ""), children: /* @__PURE__ */ w.jsx("a", { href: "/invalid-route", onClick: n, className: "jsx-1370157471", children: "This nav is invalid" }) })
     ] })
   ] });
