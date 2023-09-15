@@ -13,7 +13,7 @@ declare global {
 type letter = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z"
 type cash = `$${string}`;
 type nocash = `${letter}${string}`
-interface BreadcrumbNames {
+export interface BreadcrumbNames {
   $title: string;
   [key: nocash]: BreadcrumbNames;
 }

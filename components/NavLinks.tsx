@@ -117,7 +117,6 @@ export default function NavLinks({
           <a href="/invalid-route" onClick={requestRouteChange}>This nav is invalid</a>
         </li>
       </ul>
-      <div>(current route: {currentRoute})</div>
     </>
   );
 }
