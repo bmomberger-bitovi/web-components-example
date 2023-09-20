@@ -4,7 +4,9 @@ import NavLinks from "../components/NavLinks";
 const WebNavLinks = r2wc(NavLinks, {
   props: {
     routeRoot: "string",
-    initialRoute: "string"
+    initialRoute: "string",
+    onRouteRequest: "function",
+    onPrefetchRequest: "function",
   },
 });
 

@@ -21,7 +21,9 @@ declare global {
         "routerequest": RouteRequestEvent;
     }
 }
-export default function NavLinks({ routeRoot, initialRoute }: {
+export default function NavLinks({ routeRoot, initialRoute, onRouteRequest, onPrefetchRequest, }: {
     routeRoot: string;
     initialRoute: string;
+    onRouteRequest: (url: string) => void;
+    onPrefetchRequest: (url: string) => void;
 }): import("react").JSX.Element;

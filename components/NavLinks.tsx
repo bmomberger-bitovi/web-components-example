@@ -30,10 +30,14 @@ declare global {
 
 export default function NavLinks({
   routeRoot = "/",
-  initialRoute
+  initialRoute,
+  onRouteRequest,
+  onPrefetchRequest,
 }: {
   routeRoot: string;
   initialRoute: string;
+  onRouteRequest: (url: string) => void;
+  onPrefetchRequest: (url: string) => void;
 }) {
   const [currentRoute, setCurrentRoute] = useState(
     initialRoute.startsWith(routeRoot)
@@ -72,6 +76,10 @@ export default function NavLinks({
     )
 
     ev.target.dispatchEvent(wrapped);
+
+    if (typeof onRouteRequest === "function") {
+      onRouteRequest(href);
+    }
   }
 
   const requestPrefetch = (ev: ReactMouseEvent) => {
@@ -91,6 +99,10 @@ export default function NavLinks({
     );
 
     ev.target.dispatchEvent(wrapped);
+
+    if (typeof onPrefetchRequest === "function") {
+      onPrefetchRequest(href);
+    }
   }
 
   return (
