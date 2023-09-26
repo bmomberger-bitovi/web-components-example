@@ -7,10 +7,12 @@
   "exports": {
     "./components/Breadcrumbs": {
       "import": "./public/Breadcrumbs.es.js",
+      "require": "./public/Breadcrumbs.cjs.js",
       "types": "./public/Breadcrumbs.d.ts"
     },
     "./components/NavLinks": {
       "import": "./public/NavLinks.es.js",
+      "require": "./public/NavLinks.cjs.js",
       "types": "./public/NavLinks.d.ts"
     },
     "./components/PageContent": {
@@ -33,9 +35,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "build:wc": "node vite-build.mjs"
+    "build:wc": "node vite-build.mjs && node ts-build.mjs"
   },
   "dependencies": {
+    "@babel/plugin-syntax-import-attributes": "^7.22.5",
     "@r2wc/react-to-web-component": "^2.0.2",
     "next": "latest",
     "react": "18.2.0",
@@ -46,6 +49,7 @@
     "@types/node": "20.5.9",
     "@types/react": "18.2.21",
     "@vitejs/plugin-react": "^4.0.4",
+    "glob": "^10.3.7",
     "typescript": "^5.2.2",
     "vite": "^4.4.9"
   },

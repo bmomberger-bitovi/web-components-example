@@ -1,58 +1,46 @@
-// scripts/build.js
 import path from "path";
 import url from "url";
 import { build, defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import typescript from '@rollup/plugin-typescript';
-// import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
+import globals from "./webcomponents/globals.json" assert { type: "json" };
+import { writeFile } from "fs/promises";
+
+const liteRollup = {
+  external: Object.keys(globals),
+  output: {
+    globals
+  },
+}
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
-const breadCrumbsConfig = {
-  plugins: [],
-  entry: path.resolve(__dirname, "./components/Breadcrumbs.tsx"),
-  fileName: (format) => `Breadcrumbs.${format}.js`,
-  name: "Breadcrumbs",
-  formats: ["es", "cjs"],
-};
-const navLinksConfig = {
-  plugins: [],
-  entry: path.resolve(__dirname, "./components/NavLinks.tsx"),
-  fileName: (format) => `NavLinks.${format}.js`,
-  name: "NavLinks",
-  formats: ["es", "cjs"],
-};
-const pageContentConfig = {
-  plugins: [],
-  entry: path.resolve(__dirname, "./components/PageContent.jsx"),
-  fileName: (format) => `PageContent.${format}.js`,
-  name: "PageContent",
-  formats: ["es", "cjs"],
-};
-
 const breadCrumbsWCConfig = {
   plugins: [],
   entry: path.resolve(__dirname, "./webcomponents/bread-crumbs.js"),
-  fileName: (format) => `bread-crumbs.${format}.js`,
   name: "bread-crumbs",
   formats: ["umd"],
 };
 const navLinksWCConfig = {
   plugins: [],
   entry: path.resolve(__dirname, "./webcomponents/nav-links.js"),
-  fileName: (format) => `nav-links.${format}.js`,
   name: "nav-links",
   formats: ["umd"],
 };
 const pageContentWCConfig = {
   plugins: [],
   entry: path.resolve(__dirname, "./webcomponents/page-content.js"),
-  fileName: (format) => `page-content.${format}.js`,
   name: "page-content",
   formats: ["umd"],
 };
 
+const dependenciesConfig = {
+  plugins: [],
+  entry: path.resolve(__dirname, "./webcomponents/dependencies.js"),
+  name: "dependencies",
+  formats: ["umd"],
+};
 
-const getConfiguration = ({ plugins, ...library }) => {
+const getConfiguration = ({ plugins, ...library }, mode) => {
   return defineConfig(() => ({
     plugins: [
       react({
@@ -66,22 +54,23 @@ const getConfiguration = ({ plugins, ...library }) => {
       ...plugins
     ],
     build: {
+      emptyOutDir: false,
       lib: {
         ...library,
+        fileName: (format) => `${library.name}.${mode}.${format}.js`
       },
       "outDir": "./public",
-      rollupOptions: {
-        external: ["react", "react-dom"],
-        output: {
-          globals: {
-            react: "React",
-            "react-dom": "ReactDOM"
-          },
-        },
-      },
+      rollupOptions: mode === "lite" ? liteRollup : {},
     },
   }));
 };
+
+const createDependencyRollup = () => {
+  const imports = Object.entries(globals).map(([modulePath, globalName]) => `import ${globalName} from "${modulePath}";`);
+  const assignments = Object.entries(globals).map(([modulePath, globalName]) => `global.${globalName} = ${globalName};`);
+
+  return writeFile(path.resolve(__dirname, "./webcomponents/dependencies.js"), [...imports, ...assignments].join("\n"));
+}
 
 const viteBuild = (configFactory) => {
   const config = configFactory();
@@ -90,14 +79,16 @@ const viteBuild = (configFactory) => {
 };
 
 const buildLibraries = async () => {
-  await Promise.all([
-    viteBuild(getConfiguration(breadCrumbsConfig)),
-    viteBuild(getConfiguration(navLinksConfig)),
-    viteBuild(getConfiguration(pageContentConfig)),
-    viteBuild(getConfiguration(breadCrumbsWCConfig)),
-    viteBuild(getConfiguration(navLinksWCConfig)),
-    viteBuild(getConfiguration(pageContentWCConfig)),
-  ]);
+  await createDependencyRollup();
+
+  await Promise.all([].concat(
+    ...["lite", "full"].map(mode => [
+      viteBuild(getConfiguration(breadCrumbsWCConfig, mode)),
+      viteBuild(getConfiguration(navLinksWCConfig, mode)),
+      viteBuild(getConfiguration(pageContentWCConfig, mode)),
+    ]),
+    [viteBuild(getConfiguration(dependenciesConfig, "full"))]
+  ));
 };
 
 buildLibraries();

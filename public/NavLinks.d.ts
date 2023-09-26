@@ -26,4 +26,4 @@ export default function NavLinks({ routeRoot, initialRoute, onRouteRequest, onPr
     initialRoute: string;
     onRouteRequest: (url: string) => void;
     onPrefetchRequest: (url: string) => void;
-}): import("react").JSX.Element;
+}): import("react/jsx-runtime").JSX.Element;

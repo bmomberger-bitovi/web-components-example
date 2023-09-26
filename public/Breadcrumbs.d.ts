@@ -1,4 +1,3 @@
-/// <reference types="react" />
 export interface RouteChangeEvent extends CustomEvent<{
     url: string;
 }> {
@@ -18,5 +17,5 @@ export default function Breadcrumbs({ routeRoot, initialRoute, tokens }: {
     routeRoot: string;
     initialRoute: string;
     tokens: BreadcrumbNames;
-}): import("react").JSX.Element;
+}): import("react/jsx-runtime").JSX.Element;
 export {};
