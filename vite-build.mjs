@@ -42,6 +42,9 @@ const dependenciesConfig = {
 
 const getConfiguration = ({ plugins, ...library }, mode) => {
   return defineConfig(() => ({
+    define: {
+      'process.env': { NODE_ENV: "production" }
+    },
     plugins: [
       react({
         babel: {
@@ -67,9 +70,12 @@ const getConfiguration = ({ plugins, ...library }, mode) => {
 
 const createDependencyRollup = () => {
   const imports = Object.entries(globals).map(([modulePath, globalName]) => `import ${globalName} from "${modulePath}";`);
-  const assignments = Object.entries(globals).map(([modulePath, globalName]) => `global.${globalName} = ${globalName};`);
+  
+  const guard = `const rootObj = typeof window !== "undefined" ? window : global`;
 
-  return writeFile(path.resolve(__dirname, "./webcomponents/dependencies.js"), [...imports, ...assignments].join("\n"));
+  const assignments = Object.entries(globals).map(([modulePath, globalName]) => `rootObj.${globalName} = ${globalName};`);
+
+  return writeFile(path.resolve(__dirname, "./webcomponents/dependencies.js"), [...imports, guard, ...assignments].join("\n"));
 }
 
 const viteBuild = (configFactory) => {
