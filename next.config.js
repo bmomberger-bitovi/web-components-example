@@ -9,7 +9,7 @@ const nextConfig = {
                   {
                     type: 'header',
                     key: 'origin',
-                    value: '(?<origin>http://localhost:3001|https://.*\\.ngrok-free\\.app)',
+                    value: '(?<origin>http://localhost:300[0-9]|https://.*\\.ngrok-free\\.app)',
                   },
                 ],
                 headers: [
