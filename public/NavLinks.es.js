@@ -1,6 +1,16 @@
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
 import { useEffect, useState } from "react";
-export default function NavLinks({ routeRoot = "/", initialRoute, onRouteRequest, onPrefetchRequest, }) {
+/**
+ * @function NavLinks
+ * The NavLinks React component implements a set of top-level navigation links which
+ *  highlight based on the current route and generate route change request events
+ *  on user interaction.
+ * @parent components
+ * @param  {String} props.routeRoot         the root of routing for this component
+ * @param  {String} props.initialRoute      the full application route at the time of initialization
+ * @returns import("react").Element
+ */
+export default function NavLinks({ routeRoot = "/", initialRoute, }) {
     const [currentRoute, setCurrentRoute] = useState(initialRoute.startsWith(routeRoot)
         ? initialRoute.replace(routeRoot, "")
         : "");
@@ -28,9 +38,6 @@ export default function NavLinks({ routeRoot = "/", initialRoute, onRouteRequest
             originalEvent: ev
         });
         ev.target.dispatchEvent(wrapped);
-        if (typeof onRouteRequest === "function") {
-            onRouteRequest(href);
-        }
     };
     const requestPrefetch = (ev) => {
         const href = ev.target.getAttribute("href");
@@ -44,9 +51,6 @@ export default function NavLinks({ routeRoot = "/", initialRoute, onRouteRequest
             originalEvent: ev
         });
         ev.target.dispatchEvent(wrapped);
-        if (typeof onPrefetchRequest === "function") {
-            onPrefetchRequest(href);
-        }
     };
     return (_jsxs(_Fragment, { children: [_jsx("style", { jsx: true, children: `
         li.selected {

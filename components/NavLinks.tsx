@@ -52,20 +52,14 @@ declare global {
  * @parent components
  * @param  {String} props.routeRoot         the root of routing for this component
  * @param  {String} props.initialRoute      the full application route at the time of initialization
- * @param  {Function} props.onRouteRequest    alternative listener for routerequest events
- * @param  {Function} props.onPrefetchRequest alternative listener for prefetchrequest events
  * @returns import("react").Element 
  */
 export default function NavLinks({
   routeRoot = "/",
   initialRoute,
-  onRouteRequest,
-  onPrefetchRequest,
 }: {
   routeRoot: string;
   initialRoute: string;
-  onRouteRequest: (url: string) => void;
-  onPrefetchRequest: (url: string) => void;
 }) {
   const [currentRoute, setCurrentRoute] = useState(
     initialRoute.startsWith(routeRoot)
@@ -104,10 +98,6 @@ export default function NavLinks({
     )
 
     ev.target.dispatchEvent(wrapped);
-
-    if (typeof onRouteRequest === "function") {
-      onRouteRequest(href);
-    }
   }
 
   const requestPrefetch = (ev: ReactMouseEvent) => {
@@ -127,10 +117,6 @@ export default function NavLinks({
     );
 
     ev.target.dispatchEvent(wrapped);
-
-    if (typeof onPrefetchRequest === "function") {
-      onPrefetchRequest(href);
-    }
   }
 
   return (

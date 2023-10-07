@@ -2,7 +2,17 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
-function NavLinks({ routeRoot = "/", initialRoute, onRouteRequest, onPrefetchRequest, }) {
+/**
+ * @function NavLinks
+ * The NavLinks React component implements a set of top-level navigation links which
+ *  highlight based on the current route and generate route change request events
+ *  on user interaction.
+ * @parent components
+ * @param  {String} props.routeRoot         the root of routing for this component
+ * @param  {String} props.initialRoute      the full application route at the time of initialization
+ * @returns import("react").Element
+ */
+function NavLinks({ routeRoot = "/", initialRoute, }) {
     const [currentRoute, setCurrentRoute] = (0, react_1.useState)(initialRoute.startsWith(routeRoot)
         ? initialRoute.replace(routeRoot, "")
         : "");
@@ -30,9 +40,6 @@ function NavLinks({ routeRoot = "/", initialRoute, onRouteRequest, onPrefetchReq
             originalEvent: ev
         });
         ev.target.dispatchEvent(wrapped);
-        if (typeof onRouteRequest === "function") {
-            onRouteRequest(href);
-        }
     };
     const requestPrefetch = (ev) => {
         const href = ev.target.getAttribute("href");
@@ -46,9 +53,6 @@ function NavLinks({ routeRoot = "/", initialRoute, onRouteRequest, onPrefetchReq
             originalEvent: ev
         });
         ev.target.dispatchEvent(wrapped);
-        if (typeof onPrefetchRequest === "function") {
-            onPrefetchRequest(href);
-        }
     };
     return ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("style", { jsx: true, children: `
         li.selected {
