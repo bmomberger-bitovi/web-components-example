@@ -19,24 +19,25 @@ export default function Content() {
   const router = useRouter();
   const navLinksRef = useRef();
 
-  // useEffect(() => {
-    const handler = (url) => {
-      if (!url.includes("invalid")) {
-         router.push(url);
+  useEffect(() => {
+    const handler = (ev) => {
+      const { detail: { href } } = ev;
+      if (!href.includes("invalid")) {
+         router.push(href);
          setLastError(null);
       } else {
-        setLastError(`Invalid route detected: ${url}`);
+        setLastError(`Invalid route detected: ${href}`);
       }
     };
 
-  //   if(navLinksRef.current) {
-  //     const currentRef = navLinksRef.current;
-  //     currentRef.addEventListener("routerequest", handler);
-  //     return () => {
-  //       currentRef.removeEventListener("routerequest", handler);
-  //     }
-  //   }
-  // }, [navLinksRef.current]);
+    if(navLinksRef.current) {
+      const currentRef = navLinksRef.current;
+      currentRef.addEventListener("routerequest", handler);
+      return () => {
+        currentRef.removeEventListener("routerequest", handler);
+      }
+    }
+  }, [navLinksRef.current]);
 
   useEffect(() => {
       const ev = new CustomEvent("routechange", {
@@ -64,7 +65,7 @@ export default function Content() {
 
         <div ref={navLinksRef}>
         <p>Nav Links</p>
-        <NavLinks routeRoot="/content" initialRoute="/content" onRouteRequest={handler} />
+        <NavLinks routeRoot="/content" initialRoute="/content"/>
         </div>
 
         <p>Page Content</p>
