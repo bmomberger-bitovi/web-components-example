@@ -4,7 +4,7 @@ const nextConfig = {
         return [
             {
                 // matching all API routes
-                source: "/(.*)\.umd\.js",
+                source: "/(.*)\.(umd|es|cjs)\.js",
                 has: [
                   {
                     type: 'header',
