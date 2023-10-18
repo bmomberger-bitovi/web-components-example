@@ -81,24 +81,24 @@ string, optional, defaults to "/".  Nav-links will only consider a matching rout
 #### initial-route
 string, required.  This represents the full route path or the portion that the nav-links application should be aware of.
 
-# Events generated
+### Events generated
 
-## routerequest
+#### routerequest
 The `routerequest` event represents the nav links component's intent to update the host application's route.
-### Detail
+##### Detail
 - href (string) the intended full route path to navigate to
-### Other properties
+##### Other properties
 - originalEvent (React Event) the user event that triggered this request, for analytics or accessibility concerns.
 
-## prefetchrequest
+#### prefetchrequest
 The `prefetchrequest` event represents the nav links component's intent to notify the host application that a route may soon be navigated to, and any resources for the route that can be prefetched should be prefetched.
-### Detail
+##### Detail
 - href (string) the full route path that may be navigated to
 ascending or descending.
-### Other properties
+##### Other properties
 - originalEvent (React Event) the user event that triggered this request, for analytics or accessibility concerns.
 
-# Events listened
+### Events listened
 
 #### routechange
 To direct the nav-links component to update its higlighted current route link, emit "routechange" 
