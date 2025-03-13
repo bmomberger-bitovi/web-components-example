@@ -4,7 +4,7 @@ import { readdir } from "node:fs/promises";
 import { glob } from "glob";
 import path from "node:path";
 import { fileURLToPath } from 'url';
-import tsconfig from "./tsconfig.json" assert {type: "json"};
+import tsconfig from "./tsconfig.json" with {type: "json"};
 
 const {
   createProgram,

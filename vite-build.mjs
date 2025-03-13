@@ -3,7 +3,7 @@ import url from "url";
 import { build, defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import typescript from '@rollup/plugin-typescript';
-import globals from "./webcomponents/globals.json" assert { type: "json" };
+import globals from "./webcomponents/globals.json" with { type: "json" };
 import { writeFile } from "fs/promises";
 
 const liteRollup = {

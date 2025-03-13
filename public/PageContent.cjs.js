@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = PageContent;
 const jsx_runtime_1 = require("react/jsx-runtime");
 /**
  * @function PageContent
@@ -14,4 +15,3 @@ function PageContent() {
         }
       ` }), (0, jsx_runtime_1.jsx)("div", { children: "This content is loaded dynamically" })] }));
 }
-exports.default = PageContent;

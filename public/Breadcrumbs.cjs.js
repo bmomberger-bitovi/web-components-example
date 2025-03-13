@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = Breadcrumbs;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
 /**
@@ -47,4 +48,3 @@ function Breadcrumbs({ routeRoot = "/", initialRoute, tokens = { $title: "Home" 
     });
     return ((0, jsx_runtime_1.jsx)("ul", { children: routeNames.map((el, idx) => ((0, jsx_runtime_1.jsxs)("li", { children: [idx !== 0 && (0, jsx_runtime_1.jsx)("span", { children: " / " }), el] }, `breadcrumb-${el}-${idx}`))) }));
 }
-exports.default = Breadcrumbs;
